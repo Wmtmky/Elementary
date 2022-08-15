@@ -1,0 +1,233 @@
+/* Copright Wmtmky 2022
+** Elementary version alpha-1.0.0
+*/
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300&display=swap');
+
+:root{
+    --workspace-colour: hsl(0, 0%, 15%);
+    --inventory-colour: hsl(0, 0%, 20%);
+    --achievement-colour: hsl(0, 0%, 25%);
+    --inventory-width: 50vmin;
+    --item-text: white;
+    --toolbar-hue: 270;
+    --toolbar-colour: hsl(var(--toolbar-hue), 70%, 60%);
+    --toolbar-height: 10vh;
+    --toolbar-text: black;
+}
+
+body{
+    background-color: black;
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto Condensed', 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 2.5vh;
+    user-select: none;
+    scrollbar-width: 0;
+}
+
+body::-webkit-scrollbar{
+    display: none;
+}
+
+
+/* HELPBOX */
+
+div#helpbox-container{
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: 3;
+    scrollbar-width: 0;
+}
+
+div#helpbox-container::-webkit-scrollbar{
+    display: none;
+}
+
+div#helpbox{
+    background-color: white;
+    padding: 5vmin;
+    border-radius: 5vmin;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    width: 75vw;
+    max-width: 100vh;
+    max-height: 90vh;
+    scrollbar-width: 0;
+}
+
+div#helpbox::-webkit-scrollbar{
+    display: none;
+}
+
+div#helpbox h1{
+    margin: 0;
+    font-size: 5vh;
+}
+
+div#helpbox p#credits{
+    font-size: 1.5vh;
+}
+
+div#helpbox button#close-helpbox{
+    background-color: var(--toolbar-colour);
+    font-size: 3vh;
+    border-radius: 1vmin;
+    float: right;
+    padding: 1vmin;
+    margin-top: calc(-4.5vh - 1vmin);
+}
+
+
+/* ACHIEVEMENTS */
+
+div#achievement-container{
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: none;
+    flex-direction: column;
+    gap: 0.5vh;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    width: 50vw;
+    max-width: 50vh;
+    height: fit-content;
+    background-color: var(--achievement-colour);
+    color: var(--item-text);
+    box-sizing: border-box;
+    border: 0.5vh solid var(--toolbar-colour);
+    border-radius: 2vh;
+    z-index: 2;
+    scrollbar-width: 0;
+}
+
+div#achievement-container *{
+    font-size: 2vh;
+    margin: 0 1vh;
+}
+
+div#achievement-container h2{
+    font-size: 2.5vh;
+    font-weight: bold;
+    margin-top: 1vh;
+    letter-spacing: 0.75px;
+}
+
+div#achievement-container h3{
+    font-size: 1.5vh;
+    font-weight: bold;
+    margin-bottom: 1vh;
+    letter-spacing: 0.75px;
+}
+
+
+/* LAYOUT */
+
+main#grid-container {
+    display: grid;
+    grid-template:
+    'w i' calc(100vh - var(--toolbar-height))
+    't t' var(--toolbar-height)
+    / calc(100vw - var(--inventory-width)) var(--inventory-width);
+}
+
+
+/* WORKSPACE */
+
+div#workspace-container{
+    background-color: var(--workspace-colour);
+    grid-area: w;
+    color: var(--item-text);
+}
+
+div#workspace-container > div{
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+div#workspace-container div svg{
+    position: absolute;
+    height: 8vh;
+    width: 8vh;
+    transition: transform 200ms;
+}
+
+div#workspace-container div svg.active-drag{
+    z-index: 1;
+}
+
+
+/* INVENTORY */
+
+div#inventory{
+    background-color: var(--inventory-colour);
+    grid-area: i;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    color: var(--item-text);
+    display: flex;
+    flex-direction: column;
+    padding: 1.5vh;
+    z-index: 0;
+}
+
+div#inventory::-webkit-scrollbar{
+    display: none;
+}
+
+div#inventory > div{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 8vh;
+}
+
+div#inventory > div svg{
+    min-width: 8vh;
+    max-width: 8vh;
+    aspect-ratio: 1;
+}
+
+div#inventory > div p{
+    margin-left: 1vh;
+}
+
+
+/* TOOLBAR */
+
+div#toolbar{
+    background-color: var(--toolbar-colour);
+    grid-area: t;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: calc(var(--toolbar-height) / 5);
+    z-index: 2;
+}
+
+div#toolbar > div{
+    border-radius: calc(var(--toolbar-height) / 10);
+    height: calc(var(--toolbar-height) / 2);
+}
+
+div#toolbar > div svg{
+    height: 100%;
+    aspect-ratio: 1;
+    transition: 0.25s;
+}
+
+div#toolbar > div svg:hover{
+    fill: #444444;
+}
