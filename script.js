@@ -1,5 +1,6 @@
-// Copyright Wmtmky 2022
-// Elementary version alpha-1.0.0
+// All Code by Wmtmky, 2022
+// Elementary version
+version = "alpha-1.0.1";
 
 window.addEventListener('load',loadSaveGame);
 
@@ -15,6 +16,8 @@ var currentWorkspace;
 var particleDiameter = window.innerHeight * 0.08;
 
 function loadSaveGame() {
+
+    document.getElementById('version').innerHTML = version;
     
     // first time players
     let pageLoads = localStorage.getItem('--elementary-game-pageloads');
@@ -126,7 +129,7 @@ function addItem(item) {
 
     //add to html
     let itemDiv = document.createElement('div');
-    itemDiv.innerHTML = "<svg viewbox='0 0 64 64' data-id=" + item + " onmousedown='summonParticle(this,event)'><use href='#" + item + "-particle'/></svg><p>" + items[currentWorkspace][item].displayName + "</p>";
+    itemDiv.innerHTML = "<svg viewbox='0 0 64 64' data-id=" + item + " onmousedown='summonParticle(this,event)' ontouchstart='summonParticle(this,event)'><use href='#" + item + "-particle'/></svg><p>" + items[currentWorkspace][item].displayName + "</p>";
     inventoryContainer.appendChild(itemDiv);
 }
 
@@ -134,16 +137,24 @@ function addItem(item) {
 function summonParticle(item, e) {
 
     if(e.target.innerHTML) return;
+    if(e.touches[0]) e = accountTouch(e);
     
     let particle = item.cloneNode(true);
     particle.classList.add('active-drag');
     particle.setAttribute('onmousedown','selectParticle(this,event)');
+    particle.setAttribute('ontouchstart','selectParticle(this,event,true)');
     document.getElementById(currentWorkspace).appendChild(particle);
     particle.style.top = e.clientY - (particleDiameter / 2);
     particle.style.left = e.clientX - (particleDiameter / 2);
-    
+
     selectParticle(particle, e);
 
+}
+
+function accountTouch(obj) {
+    obj.clientX = obj.touches[0].clientX;
+    obj.clientY = obj.touches[0].clientY;
+    return obj;
 }
 
 
@@ -151,20 +162,26 @@ function summonParticle(item, e) {
 
 //dragging particles
 function selectParticle(particle, e) {
-
+    
     if(e.target.innerHTML) return;
+    if(e.touches[0]) e = accountTouch(e);
     
     let yOffset = particle.getBoundingClientRect().y - e.clientY;
     let xOffset = particle.getBoundingClientRect().x - e.clientX;
     
     let moveParticle = (event) => {
+        if(event.touches[0]) event = accountTouch(event);
         particle.style.top = event.clientY + yOffset;
         particle.style.left = event.clientX + xOffset;
     }
     let stopParticle = (event) => {
         document.removeEventListener('mousemove', moveParticle)
+        document.removeEventListener('touchmove', moveParticle)
         document.removeEventListener('mouseup', stopParticle)
+        document.removeEventListener('touchend', stopParticle)
         particle.classList.remove('active-drag');
+        
+        if(event.touches[0]) event = accountTouch(event);
         if ( // if particle mostly off screen
         event.clientY > workspaceContainer.clientHeight - particleDiameter / 2 ||
             event.clientX > workspaceContainer.clientWidth - particleDiameter / 2 ||
@@ -179,7 +196,9 @@ function selectParticle(particle, e) {
     
     particle.classList.add('active-drag');
     document.addEventListener('mousemove', moveParticle)
+    document.addEventListener('touchmove', moveParticle)
     document.addEventListener('mouseup', stopParticle)
+    document.addEventListener('touchend', stopParticle)
 
 }
 
@@ -252,7 +271,7 @@ items = {
                 'antistrange':'K-plus',
                 'anticharm':'anti-D-null',
                 'antibottom':'B-plus',
-                //'down,up':'proton'
+                'down,up':'proton'
             }
         },
         'antiup':{
@@ -273,7 +292,7 @@ items = {
                 'antistrange':'K-null',
                 'anticharm':'D-minus',
                 'antibottom':'B-null',
-                //'up,up':'proton'
+                'up,up':'proton'
             }
         },
         'antidown':{
