@@ -1,6 +1,6 @@
 // All Code by Wmtmky, 2022
 // Elementary version
-version = "alpha-1.0.1";
+version = "alpha-1.0.2";
 
 window.addEventListener('load',loadSaveGame);
 
@@ -18,6 +18,7 @@ var particleDiameter = window.innerHeight * 0.08;
 function loadSaveGame() {
 
     document.getElementById('version').innerHTML = version;
+    window.scrollTo(0, 1);
     
     // first time players
     let pageLoads = localStorage.getItem('--elementary-game-pageloads');
@@ -59,6 +60,7 @@ function resetGame() {
     clearWorkspace()
     console.log('Game Reset')
 }
+
 
 // WORKSPACES
 
@@ -137,7 +139,7 @@ function addItem(item) {
 function summonParticle(item, e) {
 
     if(e.target.innerHTML) return;
-    if(e.touches[0]) e = accountTouch(e);
+    if(e.touches?.[0]) e = accountForTouch(e);
     
     let particle = item.cloneNode(true);
     particle.classList.add('active-drag');
@@ -151,7 +153,7 @@ function summonParticle(item, e) {
 
 }
 
-function accountTouch(obj) {
+function accountForTouch(obj) {
     obj.clientX = obj.touches[0].clientX;
     obj.clientY = obj.touches[0].clientY;
     return obj;
@@ -164,13 +166,13 @@ function accountTouch(obj) {
 function selectParticle(particle, e) {
     
     if(e.target.innerHTML) return;
-    if(e.touches[0]) e = accountTouch(e);
+    if(e.touches?.[0]) e = accountForTouch(e);
     
     let yOffset = particle.getBoundingClientRect().y - e.clientY;
     let xOffset = particle.getBoundingClientRect().x - e.clientX;
     
     let moveParticle = (event) => {
-        if(event.touches[0]) event = accountTouch(event);
+        if(event.touches?.[0]) event = accountForTouch(event);
         particle.style.top = event.clientY + yOffset;
         particle.style.left = event.clientX + xOffset;
     }
@@ -181,7 +183,7 @@ function selectParticle(particle, e) {
         document.removeEventListener('touchend', stopParticle)
         particle.classList.remove('active-drag');
         
-        if(event.touches[0]) event = accountTouch(event);
+        if(event.touches?.[0]) event = accountForTouch(event);
         if ( // if particle mostly off screen
         event.clientY > workspaceContainer.clientHeight - particleDiameter / 2 ||
             event.clientX > workspaceContainer.clientWidth - particleDiameter / 2 ||
