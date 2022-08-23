@@ -1,6 +1,6 @@
 // All Code by Wmtmky, 2022
 // Elementary version
-version = "alpha-1.0.2";
+version = "alpha-1.0.3";
 
 window.addEventListener('load',loadSaveGame);
 
@@ -426,7 +426,7 @@ items = {
             displayName:'Anti K Null Meson (Kaon)'
         },
         'phi':{
-            displayName:'Omega Meson'
+            displayName:'Phi Meson'
         },
         'D-plus':{
             displayName:'D Plus Meson'
