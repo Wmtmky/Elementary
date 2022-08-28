@@ -1,6 +1,6 @@
 // All Code by Wmtmky, 2022
 // Elementary version
-version = "alpha-1.0.3";
+version = "alpha-1.0.4";
 
 window.addEventListener('load',loadSaveGame);
 
