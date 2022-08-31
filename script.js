@@ -1,6 +1,6 @@
 // All Code by Wmtmky, 2022
 // Elementary version
-version = "alpha-1.0.4";
+version = "alpha-1.0.5";
 
 window.addEventListener('load',loadSaveGame);
 
@@ -11,6 +11,9 @@ var workspaceIcon = document.getElementById('workspace-icon');
 var items = new Array();
 var inventoryContainer = document.getElementById('inventory');
 var inventory = new Array();
+var achievements = new Array();
+var completedAchievements = new Array();
+var incompleteAchievements = new Array();
 
 var currentWorkspace;
 var particleDiameter = window.innerHeight * 0.08;
@@ -42,6 +45,10 @@ function loadSaveGame() {
     // load inventory
     inventory = JSON.parse(localStorage.getItem('--elementary-game-inventory')) || ['up','antiup','down','antidown'];
     loadInventory(workspaces[0])
+
+    // load achievements
+    completedAchievements = JSON.parse(localStorage.getItem('--elementary-game-completed-achievements')) || new Array();
+    for(let achievement in achievements) if(!completedAchievements.includes(achievement)) incompleteAchievements.push(achievement);
 
 }
 
@@ -121,6 +128,10 @@ function loadInventory(workspace) {
             addItem(item)
         }
     }
+}
+
+function addItems(itemArray) {
+    itemArray.forEach(addItem);
 }
 
 function addItem(item) {
@@ -246,15 +257,73 @@ function checkOverlap(particle) {
         addItem(recipe);
         checkAchievements();
     }
-
+    
 }
 
 
 // ACHIEVEMENTS
 
 function checkAchievements() {
+    for(let achievement of incompleteAchievements) if(eval(achievements[achievement].condition)) {
+        let achievementDetails = achievements[achievement];
 
+        // reward
+        eval(achievementDetails.reward);
+        changeWorkspace(0);
+
+        // show
+        document.getElementById('achievement-name').innerText = achievementDetails.title;
+        document.getElementById('achievement-desc').innerText = achievementDetails.requirements;
+        document.getElementById('achievement-reward').innerText = achievementDetails.unlocks;
+        achievementContainer.style.transform = 'translateX(0)';
+
+        // hide
+        setTimeout(function(){
+            achievementContainer.style.transform = 'translateX(-100%)';
+        }, 5000)
+        
+        // update achievement list
+        completedAchievements.push(achievement);
+        localStorage.setItem('--elementary-completed-achievements', JSON.stringify(completedAchievements));
+        incompleteAchievements.splice(incompleteAchievements.indexOf(achievement), 1)
+        
+        return; // only check one achievement
+    }
 }
+
+function inventoryIncludes(valuesArray) {
+    return valuesArray.every(value => inventory.includes(value))
+}
+
+function somethingStrange() {
+    let count = 0;
+    for(let i of ['pi-null','eta','eta-prime','rho-null','omega-meson']) if(inventory.includes(i)) count++;
+    if(count > 2 || inventoryIncludes(['pi-plus', 'rho-plus']) || inventoryIncludes(['pi-minus', 'rho-minus'])) return true;
+}
+
+achievements = {
+    'mesons-1':{
+        condition : "somethingStrange()",
+        reward : "addItems(['strange','antistrange','charm','anticharm'])",
+        title : "Something Strange is Happening...",
+        requirements : "Obtain different results from mixing the same particles.",
+        unlocks : "Unlocks second generation quarks and antiquarks."
+    },
+    'mesons-2':{
+        condition : "inventoryIncludes(['pi-plus','pi-minus','pi-null','eta','eta-prime','charmed-eta','bottom-eta','rho-plus','rho-minus','rho-null','omega-meson','K-plus','K-minus','K-null','anti-K-null','phi','D-plus','D-minus','D-null','anti-D-null','strange-D-plus','strange-D-minus','J-psi'])",
+        reward : "addItems(['bottom','antibottom','top','antitop'])",
+        title : "Started from the Bottom now we're Here",
+        requirements : "Obtain all mesons using first and second generation quark and antiquarks.",
+        unlocks : "Unlocks third generation quarks and antiquarks."
+    },
+    'mesons-3':{
+        condition : "inventoryIncludes(['pi-plus','pi-minus','pi-null','eta','eta-prime','charmed-eta','bottom-eta','rho-plus','rho-minus','rho-null','omega-meson','K-plus','K-minus','K-null','anti-K-null','phi','D-plus','D-minus','D-null','anti-D-null','strange-D-plus','strange-D-minus','J-psi','B-plus','B-minus','B-null','anti-B-null','strange-B','strange-anti-B','charmed-B-plus','charmed-B-minus','upsilon','theta'])",
+        reward : "",
+        title : "Mesons",
+        requirements : "Obtain all mesons.",
+        unlocks : ""
+    }
+};
 
 
 // ITEM LIST
@@ -482,6 +551,9 @@ items = {
 
         'proton':{
             displayName:'Proton'
+        },
+        'neutron':{
+            displayName:'Neutron'
         }
     },
     'electromagnetic':{
