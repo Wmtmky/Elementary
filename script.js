@@ -1,6 +1,6 @@
 // All Code by Wmtmky, 2022
 // Elementary version
-version = "alpha-1.0.5";
+version = "alpha-1.0.6";
 
 window.addEventListener('load',loadSaveGame);
 
@@ -284,7 +284,7 @@ function checkAchievements() {
         
         // update achievement list
         completedAchievements.push(achievement);
-        localStorage.setItem('--elementary-completed-achievements', JSON.stringify(completedAchievements));
+        localStorage.setItem('--elementary-game-completed-achievements', JSON.stringify(completedAchievements));
         incompleteAchievements.splice(incompleteAchievements.indexOf(achievement), 1)
         
         return; // only check one achievement
@@ -297,7 +297,7 @@ function inventoryIncludes(valuesArray) {
 
 function somethingStrange() {
     let count = 0;
-    for(let i of ['pi-null','eta','eta-prime','rho-null','omega-meson']) if(inventory.includes(i)) count++;
+    for(let i of ['pi-zero','eta','eta-prime','rho-zero','omega-meson']) if(inventory.includes(i)) count++;
     if(count > 2 || inventoryIncludes(['pi-plus', 'rho-plus']) || inventoryIncludes(['pi-minus', 'rho-minus'])) return true;
 }
 
@@ -310,14 +310,14 @@ achievements = {
         unlocks : "Unlocks second generation quarks and antiquarks."
     },
     'mesons-2':{
-        condition : "inventoryIncludes(['pi-plus','pi-minus','pi-null','eta','eta-prime','charmed-eta','bottom-eta','rho-plus','rho-minus','rho-null','omega-meson','K-plus','K-minus','K-null','anti-K-null','phi','D-plus','D-minus','D-null','anti-D-null','strange-D-plus','strange-D-minus','J-psi'])",
+        condition : "inventoryIncludes(['pi-plus','pi-minus','pi-zero','eta','eta-prime','charmed-eta','rho-plus','rho-minus','rho-zero','omega-meson','K-plus','K-minus','K-zero','anti-K-zero','phi','D-plus','D-minus','D-zero','anti-D-zero','strange-D-plus','strange-D-minus','J-psi'])",
         reward : "addItems(['bottom','antibottom','top','antitop'])",
         title : "Started from the Bottom now we're Here",
         requirements : "Obtain all mesons using first and second generation quark and antiquarks.",
         unlocks : "Unlocks third generation quarks and antiquarks."
     },
     'mesons-3':{
-        condition : "inventoryIncludes(['pi-plus','pi-minus','pi-null','eta','eta-prime','charmed-eta','bottom-eta','rho-plus','rho-minus','rho-null','omega-meson','K-plus','K-minus','K-null','anti-K-null','phi','D-plus','D-minus','D-null','anti-D-null','strange-D-plus','strange-D-minus','J-psi','B-plus','B-minus','B-null','anti-B-null','strange-B','strange-anti-B','charmed-B-plus','charmed-B-minus','upsilon','theta'])",
+        condition : "inventoryIncludes(['pi-plus','pi-minus','pi-zero','eta','eta-prime','charmed-eta','bottom-eta','rho-plus','rho-minus','rho-zero','omega-meson','K-plus','K-minus','K-zero','anti-K-zero','phi','D-plus','D-minus','D-zero','anti-D-zero','strange-D-plus','strange-D-minus','J-psi','B-plus','B-minus','B-zero','anti-B-zero','strange-B','strange-anti-B','charmed-B-plus','charmed-B-minus','upsilon','theta'])",
         reward : "",
         title : "Mesons",
         requirements : "Obtain all mesons.",
@@ -337,10 +337,10 @@ items = {
         'up':{
             displayName:'Up Quark',
             recipes:{
-                'antiup':"pickOne(['pi-null','eta','eta-prime','rho-null','omega-meson'])",
+                'antiup':"pickOne(['pi-zero','eta','eta-prime','rho-zero','omega-meson'])",
                 'antidown':"pickOne(['pi-plus','rho-plus'])",
                 'antistrange':'K-plus',
-                'anticharm':'anti-D-null',
+                'anticharm':'anti-D-zero',
                 'antibottom':'B-plus',
                 'down,up':'proton'
             }
@@ -348,10 +348,10 @@ items = {
         'antiup':{
             displayName:'Antiup Quark',
             recipes:{
-                'up':"pickOne(['pi-null','eta','eta-prime','rho-null','omega-meson'])",
+                'up':"pickOne(['pi-zero','eta','eta-prime','rho-zero','omega-meson'])",
                 'down':"pickOne(['pi-minus','rho-minus'])",
                 'strange':'K-minus',
-                'charm':'D-null',
+                'charm':'D-zero',
                 'bottom':'B-minus'
             }
         },
@@ -359,10 +359,10 @@ items = {
             displayName:'Down Quark',
             recipes:{
                 'antiup':"pickOne(['pi-minus','rho-minus'])",
-                'antidown':"pickOne(['pi-null','eta','eta-prime','rho-null','omega-meson'])",
-                'antistrange':'K-null',
+                'antidown':"pickOne(['pi-zero','eta','eta-prime','rho-zero','omega-meson'])",
+                'antistrange':'K-zero',
                 'anticharm':'D-minus',
-                'antibottom':'B-null',
+                'antibottom':'B-zero',
                 'up,up':'proton'
             }
         },
@@ -370,17 +370,17 @@ items = {
             displayName:'Antidown Quark',
             recipes:{
                 'up':"pickOne(['pi-plus','rho-plus'])",
-                'down':"pickOne(['pi-null','eta','eta-prime','rho-null','omega-meson'])",
-                'strange':'anti-K-null',
+                'down':"pickOne(['pi-zero','eta','eta-prime','rho-zero','omega-meson'])",
+                'strange':'anti-K-zero',
                 'charm':'D-plus',
-                'bottom':'anti-B-null'
+                'bottom':'anti-B-zero'
             }
         },
         'strange':{
             displayName:'Strange Quark',
             recipes:{
                 'antiup':'K-minus',
-                'antidown':'anti-K-null',
+                'antidown':'anti-K-zero',
                 'antistrange':"pickOne(['eta','eta-prime','phi'])",
                 'anticharm':'strange-D-minus',
                 'antibottom':'strange-B'
@@ -390,7 +390,7 @@ items = {
             displayName:'Antistrange Quark',
             recipes:{
                 'up':'K-plus',
-                'down':'K-null',
+                'down':'K-zero',
                 'strange':"pickOne(['eta','eta-prime','phi'])",
                 'charm':'strange-D-plus',
                 'bottom':'strange-anti-B'
@@ -399,7 +399,7 @@ items = {
         'charm':{
             displayName:'Charm Quark',
             recipes:{
-                'antiup':'D-null',
+                'antiup':'D-zero',
                 'antidown':'D-plus',
                 'antistrange':'strange-D-plus',
                 'anticharm':"pickOne(['charmed-eta','J-psi'])",
@@ -409,7 +409,7 @@ items = {
         'anticharm':{
             displayName:'Anticharm Quark',
             recipes:{
-                'up':'anti-D-null',
+                'up':'anti-D-zero',
                 'down':'D-minus',
                 'strange':'strange-D-minus',
                 'charm':"pickOne(['charmed-eta','J-psi'])",
@@ -420,7 +420,7 @@ items = {
             displayName:'Bottom Quark',
             recipes:{
                 'antiup':'B-minus',
-                'antidown':'anti-B-null',
+                'antidown':'anti-B-zero',
                 'antistrange':'strange-anti-B',
                 'anticharm':'charmed-B-minus',
                 'antibottom':"pickOne(['bottom-eta','upsilon'])"
@@ -430,7 +430,7 @@ items = {
             displayName:'Antibottom Quark',
             recipes:{
                 'up':'B-plus',
-                'down':'B-null',
+                'down':'B-zero',
                 'strange':'strange-B',
                 'charm':'charmed-B-plus',
                 'bottom':"pickOne(['bottom-eta','upsilon'])"
@@ -455,8 +455,8 @@ items = {
         'pi-minus':{
             displayName:'Pi Minus Meson (Pion)'
         },
-        'pi-null':{
-            displayName:'Pi Null Meson (Pion)'
+        'pi-zero':{
+            displayName:'Pi Zero Meson (Pion)'
         },
         'eta':{
             displayName:'Eta Meson'
@@ -476,8 +476,8 @@ items = {
         'rho-minus':{
             displayName:'Rho Minus Meson'
         },
-        'rho-null':{
-            displayName:'Rho Null Meson'
+        'rho-zero':{
+            displayName:'Rho Zero Meson'
         },
         'omega-meson':{
             displayName:'Omega Meson'
@@ -488,11 +488,11 @@ items = {
         'K-minus':{
             displayName:'K Minus Meson (Kaon)'
         },
-        'K-null':{
-            displayName:'K Null Meson (Kaon)'
+        'K-zero':{
+            displayName:'K Zero Meson (Kaon)'
         },
-        'anti-K-null':{
-            displayName:'Anti K Null Meson (Kaon)'
+        'anti-K-zero':{
+            displayName:'Anti K Zero Meson (Kaon)'
         },
         'phi':{
             displayName:'Phi Meson'
@@ -503,11 +503,11 @@ items = {
         'D-minus':{
             displayName:'D Minus Meson'
         },
-        'D-null':{
-            displayName:'D Null Meson'
+        'D-zero':{
+            displayName:'D Zero Meson'
         },
-        'anti-D-null':{
-            displayName:'Anti D Null Meson'
+        'anti-D-zero':{
+            displayName:'Anti D Zero Meson'
         },
         'strange-D-plus':{
             displayName:'Strange D Plus Meson'
@@ -524,11 +524,11 @@ items = {
         'B-minus':{
             displayName:'B Minus Meson'
         },
-        'B-null':{
-            displayName:'B Null Meson'
+        'B-zero':{
+            displayName:'B Zero Meson'
         },
-        'anti-B-null':{
-            displayName:'Anti B Null Meson'
+        'anti-B-zero':{
+            displayName:'Anti B Zero Meson'
         },
         'strange-B':{
             displayName:'Strange B Meson'
