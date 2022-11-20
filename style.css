@@ -14,6 +14,7 @@
     --toolbar-colour: hsl(var(--toolbar-hue), 70%, 60%);
     --toolbar-height: 10vh;
     --toolbar-text: black;
+    --particle-size: 8vh;
 }
 
 body{
@@ -156,12 +157,15 @@ div#workspace-container > div{
     width: 100%;
     height: 100%;
     overflow: hidden;
+    box-sizing: border-box;
+    padding: 5vh;
+    color: var(--achievement-colour);
 }
 
 div#workspace-container div svg{
     position: absolute;
-    height: 8vh;
-    width: 8vh;
+    height: var(--particle-size);
+    width: var(--particle-size);
     transition: transform 200ms;
 }
 
@@ -192,12 +196,12 @@ div#inventory > div{
     display: flex;
     flex-direction: row;
     align-items: center;
-    height: 8vh;
+    height: var(--particle-size);
 }
 
 div#inventory > div svg{
-    min-width: 8vh;
-    max-width: 8vh;
+    min-width: var(--particle-size);
+    max-width: var(--particle-size);
     aspect-ratio: 1;
 }
 

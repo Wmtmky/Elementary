@@ -1,8 +1,8 @@
 // All Code by Wmtmky, 2022
 // Elementary version
-version = "alpha-1.0.6";
+version = "alpha-1.0.7";
 
-window.addEventListener('load',loadSaveGame);
+window.addEventListener('load', loadSaveGame);
 
 var achievementContainer = document.getElementById('achievement-container');
 var workspaceContainer = document.getElementById('workspace-container');
@@ -44,11 +44,14 @@ function loadSaveGame() {
     
     // load inventory
     inventory = JSON.parse(localStorage.getItem('--elementary-game-inventory')) || ['up','antiup','down','antidown'];
-    loadInventory(workspaces[0])
+    loadInventory(workspaces[0]);
 
     // load achievements
     completedAchievements = JSON.parse(localStorage.getItem('--elementary-game-completed-achievements')) || new Array();
     for(let achievement in achievements) if(!completedAchievements.includes(achievement)) incompleteAchievements.push(achievement);
+
+    // dev reminder
+    workspaceContainer.children[0].innerHTML = "Please note Elementary is still in early development and features could be added or removed at any time.<br>To hard-reset the game, right-click and then double-left-click the clear-workspace icon.";
 
 }
 
