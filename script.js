@@ -1,8 +1,10 @@
 // All Code by Wmtmky, 2022
 // Elementary version
-version = "alpha-1.0.7";
+version = "alpha-1.0.8";
 
 window.addEventListener('load', loadSaveGame);
+window.addEventListener('resize', checkMobile);
+window.addEventListener('orientationchange', checkMobile);
 
 var achievementContainer = document.getElementById('achievement-container');
 var workspaceContainer = document.getElementById('workspace-container');
@@ -51,18 +53,26 @@ function loadSaveGame() {
     for(let achievement in achievements) if(!completedAchievements.includes(achievement)) incompleteAchievements.push(achievement);
 
     // dev reminder
-    workspaceContainer.children[0].innerHTML = "Please note Elementary is still in early development and features could be added or removed at any time.<br>To hard-reset the game, right-click and then double-left-click the clear-workspace icon.";
+    workspaceContainer.children[0].innerHTML = "Please note Elementary is still in early development meaning features may be added or removed at any time.<br>In the event of a bug, the game may be hard-reset by right-clicking and then double-left-clicking the clear-workspace icon.";
+    setTimeout(function() {
+        workspaceContainer.children[0].style.color = "var(--workspace-colour)";
+    }, 10000);
 
 }
 
 function toggleHelpbox() {
     let helpbox = document.getElementById('helpbox-container');
-    helpbox.style.display = (helpbox.style.display == 'none')? 'flex': 'none';
+    helpbox.style.display = (helpbox.style.display == 'flex')? 'none': 'flex';
 }
 
 function rightClickClear(event) {
     event.preventDefault();
     event.target.addEventListener('dblclick',resetGame)
+}
+
+function checkMobile() {
+    if (typeof screen.orientation == 'undefined') return; //if desktop, ignore
+    document.documentElement.style.setProperty('--usable-height', window.innerHeight + "px");
 }
 
 function resetGame() {
@@ -345,7 +355,8 @@ items = {
                 'antistrange':'K-plus',
                 'anticharm':'anti-D-zero',
                 'antibottom':'B-plus',
-                'down,up':'proton'
+                'down,up':'proton',
+                'down,down':'neutron'
             }
         },
         'antiup':{
@@ -366,7 +377,8 @@ items = {
                 'antistrange':'K-zero',
                 'anticharm':'D-minus',
                 'antibottom':'B-zero',
-                'up,up':'proton'
+                'up,up':'proton',
+                'down,up':'neutron'
             }
         },
         'antidown':{

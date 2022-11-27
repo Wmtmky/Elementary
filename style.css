@@ -5,6 +5,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300&display=swap');
 
 :root{
+    --usable-height: 100vh;
     --workspace-colour: hsl(0, 0%, 15%);
     --inventory-colour: hsl(0, 0%, 20%);
     --achievement-colour: hsl(0, 0%, 25%);
@@ -42,7 +43,7 @@ div#helpbox-container{
     justify-content: center;
     align-items: center;
     width: 100vw;
-    height: 100vh;
+    height: 100%;
     overflow-x: hidden;
     overflow-y: scroll;
     background-color: rgba(0, 0, 0, 0.4);
@@ -62,7 +63,7 @@ div#helpbox{
     overflow-y: scroll;
     width: 75vw;
     max-width: 100vh;
-    max-height: 90vh;
+    max-height: 90%;
     scrollbar-width: 0;
 }
 
@@ -139,7 +140,7 @@ div#achievement-container h3{
 main#grid-container {
     display: grid;
     grid-template:
-    'w i' calc(100vh - var(--toolbar-height))
+    'w i' calc(var(--usable-height) - var(--toolbar-height))
     't t' var(--toolbar-height)
     / calc(100vw - var(--inventory-width)) var(--inventory-width);
 }
@@ -159,7 +160,8 @@ div#workspace-container > div{
     overflow: hidden;
     box-sizing: border-box;
     padding: 5vh;
-    color: var(--achievement-colour);
+    color: hsl(0, 0%, 40%);
+    transition: color 2s;
 }
 
 div#workspace-container div svg{
