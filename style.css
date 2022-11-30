@@ -83,6 +83,7 @@ div#helpbox p#credits{
 div#helpbox button#close-helpbox{
     background-color: var(--toolbar-colour);
     font-size: 3vh;
+    border: 2px solid black;
     border-radius: 1vmin;
     float: right;
     padding: 1vmin;

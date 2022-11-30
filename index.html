@@ -42,13 +42,13 @@
             </symbol>
 
         <!-- particle components -->
-            <symbol id="particle-circle">
-                <circle cx="32" cy="32" r="24" stroke-width="0" filter="url(#particle-blur)"/>
-            </symbol>
             <filter id="particle-blur">
                 <feGaussianBlur in="sourceGraphic" result="gaussianOut" stdDeviation="2.5"/>
                 <feBlend in="SourceGraphic" in2="gaussianOut"/>
             </filter>
+            <symbol id="particle-circle">
+                <circle cx="32" cy="32" r="24" stroke-width="0" filter="url(#particle-blur)"/>
+            </symbol>
             <symbol id="lower-overline">
                 <path d="M27 22.7 37 22.7 37 24.3 27 24.3 27 22.7Z"/>
             </symbol>

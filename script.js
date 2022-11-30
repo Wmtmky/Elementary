@@ -1,6 +1,6 @@
 // All Code by Wmtmky, 2022
 // Elementary version
-version = "alpha-1.0.8";
+version = "alpha-1.0.9";
 
 window.addEventListener('load', loadSaveGame);
 window.addEventListener('resize', checkMobile);
@@ -24,6 +24,7 @@ function loadSaveGame() {
 
     document.getElementById('version').innerHTML = version;
     window.scrollTo(0, 1);
+    checkMobile();
     
     // first time players
     let pageLoads = localStorage.getItem('--elementary-game-pageloads');
