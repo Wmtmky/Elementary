@@ -26,10 +26,15 @@ body{
     font-size: 2.5vh;
     user-select: none;
     scrollbar-width: 0;
+    overscroll-behavior-y: contain;
 }
 
 body::-webkit-scrollbar{
     display: none;
+}
+
+#particle-circle {
+    filter: blur(1px);
 }
 
 

@@ -1,6 +1,6 @@
-// All Code by Wmtmky, 2022
+// All Code by Wmtmky, 2022-2023
 // Elementary version
-version = "alpha-1.0.9";
+version = "alpha-1.0.10";
 
 window.addEventListener('load', loadSaveGame);
 window.addEventListener('resize', checkMobile);
